@@ -1,5 +1,7 @@
 package lfr.agenda.DAO;
 
+import static android.text.TextUtils.indexOf;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,5 +38,12 @@ public class ClienteDAO {
         }
     }
 
+
+    public void remove(Cliente cliente) {
+        //fiz uma linha a menos aqui
+        if(cliente != null) {
+            clientes.remove(cliente);
+        }
+    }
 }
 

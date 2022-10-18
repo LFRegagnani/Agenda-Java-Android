@@ -14,8 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
-
 import lfr.agenda.DAO.ClienteDAO;
 import lfr.agenda.Model.Cliente;
 import lfr.agenda.R;
@@ -25,6 +23,8 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
     public static final String TITLE_APPBAR = "Agenda da Kátia";
 
     private final ClienteDAO dao = new ClienteDAO();
+    private ArrayAdapter<Cliente> adapter;
+
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -34,16 +34,16 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
         setContentView(R.layout.activity_lista_de_clientes);
 
         inicializaFabNovoCliente();
+        inicializaListaDeClientes();
         dao.salva(new Cliente("Luiz Fernando", "92892799", "Luiz_bim@hotmail.com"));
         dao.salva(new Cliente("dinha", "928434392799", "dunha@gmail"));
+
 
     }
 
     private void inicializaFabNovoCliente() {
         FloatingActionButton botaoFloat = findViewById(R.id.activity_main_fab_novo_aluno);
-        botaoFloat.setOnClickListener((View) -> {
-            abreFormularioInsereNovoCliente();
-        });
+        botaoFloat.setOnClickListener((View) -> abreFormularioInsereNovoCliente());
     }
 
     private void abreFormularioInsereNovoCliente() {
@@ -53,25 +53,44 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
     @Override
     protected void onResume() {
         super.onResume();
-        inicializaListaDeClientes();
+        atualizaListaDeClientes();
 
+
+    }
+
+    private void atualizaListaDeClientes() {
+        adapter.clear();
+        adapter.addAll(dao.todos());
     }
 
     private void inicializaListaDeClientes() {
         ListView listaDeClientes = findViewById(R.id.activity_main_lista_de_clientes);
-        List<Cliente> clientes = dao.todos();
-        configuraAdapter(listaDeClientes, clientes);
+        configuraAdapter(listaDeClientes);
         configuraCliqueNosItensDaListaDeNomes(listaDeClientes);
+        configuraCliqueLongoNoItem(listaDeClientes);
 
     }
 
-    private void configuraCliqueNosItensDaListaDeNomes(ListView listaDeClientes) {
-        listaDeClientes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void configuraCliqueLongoNoItem(ListView listaDeClientes) {
+        listaDeClientes.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int posicaoNaArray, long id) {
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int posicaoNaArray, long id) {
                 Cliente clienteEscolhido = (Cliente) adapterView.getItemAtPosition(posicaoNaArray);
-                abreFormularioDeEditarCliente(clienteEscolhido);
+                removeClienteDaLista(clienteEscolhido);
+                return true;
             }
+        });
+    }
+
+    private void removeClienteDaLista(Cliente clienteEscolhido) {
+        dao.remove(clienteEscolhido);
+        adapter.remove(clienteEscolhido);
+    }
+
+    private void configuraCliqueNosItensDaListaDeNomes(ListView listaDeClientes) {
+        listaDeClientes.setOnItemClickListener((adapterView, view, posicaoNaArray, id) -> {
+            Cliente clienteEscolhido = (Cliente) adapterView.getItemAtPosition(posicaoNaArray);
+            abreFormularioDeEditarCliente(clienteEscolhido);
         });
     }
 
@@ -81,9 +100,9 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
         startActivity(vaiParaFormulario);
     }
 
-    private void configuraAdapter(ListView listaDeClientes, List<Cliente> clientes) {
-        listaDeClientes.setAdapter(new ArrayAdapter<>(
-                this, android.R.layout.simple_list_item_1, clientes));
+    private void configuraAdapter(ListView listaDeClientes) {
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        listaDeClientes.setAdapter(adapter);
     }
 
 }

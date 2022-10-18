@@ -3,6 +3,7 @@ package lfr.agenda.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -31,6 +32,7 @@ public class FormularioClienteActivity extends AppCompatActivity implements Cons
         inicializaCamposPreenchiveis();
         inicializaBotaoSalvar();
         carregaCliente();
+
     }
 
     private void carregaCliente() {
@@ -54,10 +56,7 @@ public class FormularioClienteActivity extends AppCompatActivity implements Cons
 
     private void inicializaBotaoSalvar() {
         Button botaoSalvar = findViewById(R.id.botaoSalvar);
-        botaoSalvar.setOnClickListener((View) -> {
-
-            finalizaFormulario();
-        });
+        botaoSalvar.setOnClickListener((View) -> finalizaFormulario());
     }
 
     private void finalizaFormulario() {
@@ -71,13 +70,11 @@ public class FormularioClienteActivity extends AppCompatActivity implements Cons
         finish();
     }
 
-
     private void inicializaCamposPreenchiveis() {
         campoNome = findViewById(R.id.campoNome);
         campoTelefone = findViewById(R.id.campoTelefone);
         campoEmail = findViewById(R.id.campoEmail);
     }
-
 
     private void preencheCliente() {
         String nome = campoNome.getText().toString();
