@@ -3,11 +3,14 @@ package lfr.agenda.ui.activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,10 +38,26 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
 
         inicializaFabNovoCliente();
         inicializaListaDeClientes();
-        dao.salva(new Cliente("Luiz Fernando", "92892799", "Luiz_bim@hotmail.com"));
-        dao.salva(new Cliente("dinha", "928434392799", "dunha@gmail"));
 
 
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.activity_lista_clientes_menu,menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        int idDoMenu = item.getItemId();
+        if(idDoMenu == R.id.menu_remover){
+            AdapterView.AdapterContextMenuInfo menuInfo =
+                    (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            Cliente clienteEscolhido = adapter.getItem(menuInfo.position);
+            removeClienteDaLista(clienteEscolhido);
+        }
+        return super.onContextItemSelected(item);
     }
 
     private void inicializaFabNovoCliente() {
@@ -55,7 +74,6 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
         super.onResume();
         atualizaListaDeClientes();
 
-
     }
 
     private void atualizaListaDeClientes() {
@@ -67,19 +85,8 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
         ListView listaDeClientes = findViewById(R.id.activity_main_lista_de_clientes);
         configuraAdapter(listaDeClientes);
         configuraCliqueNosItensDaListaDeNomes(listaDeClientes);
-        configuraCliqueLongoNoItem(listaDeClientes);
+        registerForContextMenu(listaDeClientes);
 
-    }
-
-    private void configuraCliqueLongoNoItem(ListView listaDeClientes) {
-        listaDeClientes.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int posicaoNaArray, long id) {
-                Cliente clienteEscolhido = (Cliente) adapterView.getItemAtPosition(posicaoNaArray);
-                removeClienteDaLista(clienteEscolhido);
-                return true;
-            }
-        });
     }
 
     private void removeClienteDaLista(Cliente clienteEscolhido) {
