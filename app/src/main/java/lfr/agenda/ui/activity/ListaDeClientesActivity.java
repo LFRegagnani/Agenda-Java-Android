@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +19,9 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import lfr.agenda.DAO.ClienteDAO;
 import lfr.agenda.Model.Cliente;
@@ -26,7 +32,7 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
     public static final String TITLE_APPBAR = "Agenda da Kátia";
 
     private final ClienteDAO dao = new ClienteDAO();
-    private ArrayAdapter<Cliente> adapter;
+    private AdapterListaDeClientes adapter;
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -38,7 +44,7 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
 
         inicializaFabNovoCliente();
         inicializaListaDeClientes();
-
+        dao.salva(new Cliente("Dunha","928927299","dunha@hotmail.com"));
 
     }
 
@@ -79,6 +85,7 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
     private void atualizaListaDeClientes() {
         adapter.clear();
         adapter.addAll(dao.todos());
+        adapter.notifyDataSetChanged();
     }
 
     private void inicializaListaDeClientes() {
@@ -92,6 +99,7 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
     private void removeClienteDaLista(Cliente clienteEscolhido) {
         dao.remove(clienteEscolhido);
         adapter.remove(clienteEscolhido);
+        adapter.notifyDataSetChanged();
     }
 
     private void configuraCliqueNosItensDaListaDeNomes(ListView listaDeClientes) {
@@ -108,7 +116,7 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
     }
 
     private void configuraAdapter(ListView listaDeClientes) {
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        adapter = new AdapterListaDeClientes(this);
         listaDeClientes.setAdapter(adapter);
     }
 

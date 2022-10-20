@@ -38,9 +38,8 @@ public class ClienteDAO {
         }
     }
 
-
     public void remove(Cliente cliente) {
-        //fiz uma linha a menos aqui
+
         if(cliente != null) {
             clientes.remove(cliente);
         }
