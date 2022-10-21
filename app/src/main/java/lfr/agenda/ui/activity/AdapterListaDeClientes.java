@@ -14,13 +14,12 @@ import lfr.agenda.R;
 
 public class AdapterListaDeClientes extends BaseAdapter {
 
-    private List<Cliente> clientes = new ArrayList();
+    private final List<Cliente> clientes = new ArrayList();
     private final android.content.Context Context;
 
     public AdapterListaDeClientes(android.content.Context context) {
         Context = context;
     }
-
 
     @Override
     public int getCount() {
@@ -38,26 +37,35 @@ public class AdapterListaDeClientes extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View viewCriada = LayoutInflater.from(Context).
-                inflate(R.layout.item_cliente, viewGroup,false);
-        TextView nomeDoCliente = viewCriada.findViewById(R.id.item_nome_do_cliente);
-        TextView telefoneDoCliente = viewCriada.findViewById(R.id.item_telefone_do_cliente);
-        Cliente clienteDevolvido = clientes.get(i);
-        nomeDoCliente.setText(clienteDevolvido.getNome());
-        telefoneDoCliente.setText(clienteDevolvido.getTelefone());
+    public View getView(int posicaoNaArray, View view, ViewGroup viewGroup) {
+        View viewCriada = criaViewParaOAdapter(viewGroup);
+        VinculaCamposDeDadosDoAdapterAoCliente(posicaoNaArray, viewCriada);
         return viewCriada;
     }
 
-    public void clear() {
-        clientes.clear();
+    private void VinculaCamposDeDadosDoAdapterAoCliente(int posicaoNaArray, View viewCriada) {
+        TextView nomeDoCliente = viewCriada.findViewById(R.id.item_nome_do_cliente);
+        TextView telefoneDoCliente = viewCriada.findViewById(R.id.item_telefone_do_cliente);
+        Cliente clienteDevolvido = clientes.get(posicaoNaArray);
+        nomeDoCliente.setText(clienteDevolvido.getNome());
+        telefoneDoCliente.setText(clienteDevolvido.getTelefone());
     }
 
-    public void addAll(List<Cliente> todos) {
-        clientes.addAll(todos);
+    private View criaViewParaOAdapter(ViewGroup viewGroup) {
+        return LayoutInflater.from(Context).
+                inflate(R.layout.item_cliente, viewGroup, false);
+    }
+
+
+    public void atualiza(List<Cliente> clientes){
+        this.clientes.clear();
+        this.clientes.addAll(clientes);
+        notifyDataSetChanged();
+
     }
 
     public void remove(Cliente clienteEscolhido) {
         clientes.remove(clienteEscolhido);
+        notifyDataSetChanged();
     }
 }

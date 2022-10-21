@@ -4,13 +4,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -19,9 +15,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import lfr.agenda.DAO.ClienteDAO;
 import lfr.agenda.Model.Cliente;
@@ -44,20 +37,20 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
 
         inicializaFabNovoCliente();
         inicializaListaDeClientes();
-        dao.salva(new Cliente("Dunha","928927299","dunha@hotmail.com"));
+
 
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        getMenuInflater().inflate(R.menu.activity_lista_clientes_menu,menu);
+        getMenuInflater().inflate(R.menu.activity_lista_clientes_menu, menu);
     }
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int idDoMenu = item.getItemId();
-        if(idDoMenu == R.id.menu_remover){
+        if (idDoMenu == R.id.menu_remover) {
             AdapterView.AdapterContextMenuInfo menuInfo =
                     (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             Cliente clienteEscolhido = adapter.getItem(menuInfo.position);
@@ -83,9 +76,9 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
     }
 
     private void atualizaListaDeClientes() {
-        adapter.clear();
-        adapter.addAll(dao.todos());
-        adapter.notifyDataSetChanged();
+
+        adapter.atualiza(dao.todos());
+
     }
 
     private void inicializaListaDeClientes() {
@@ -99,7 +92,7 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
     private void removeClienteDaLista(Cliente clienteEscolhido) {
         dao.remove(clienteEscolhido);
         adapter.remove(clienteEscolhido);
-        adapter.notifyDataSetChanged();
+
     }
 
     private void configuraCliqueNosItensDaListaDeNomes(ListView listaDeClientes) {
