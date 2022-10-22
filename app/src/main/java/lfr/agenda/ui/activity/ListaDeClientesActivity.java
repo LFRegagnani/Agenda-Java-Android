@@ -1,5 +1,7 @@
 package lfr.agenda.ui.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,7 +40,6 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
         inicializaFabNovoCliente();
         inicializaListaDeClientes();
 
-
     }
 
     @Override
@@ -51,12 +52,26 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int idDoMenu = item.getItemId();
         if (idDoMenu == R.id.menu_remover) {
-            AdapterView.AdapterContextMenuInfo menuInfo =
-                    (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            Cliente clienteEscolhido = adapter.getItem(menuInfo.position);
-            removeClienteDaLista(clienteEscolhido);
+            confirmarRemoçãoOuNãoDoCliente(item);
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void confirmarRemoçãoOuNãoDoCliente(@NonNull MenuItem item) {
+        new AlertDialog.Builder(this)
+                .setTitle("Remover cliente")
+                .setMessage("Tem CERTEZA que quer remover o cliente?")
+                .setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        AdapterView.AdapterContextMenuInfo menuInfo =
+                                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                        Cliente clienteEscolhido = adapter.getItem(menuInfo.position);
+                        removeClienteDaLista(clienteEscolhido);
+                    }
+                }).
+                setNegativeButton("Não", null)
+                .show();
     }
 
     private void inicializaFabNovoCliente() {
