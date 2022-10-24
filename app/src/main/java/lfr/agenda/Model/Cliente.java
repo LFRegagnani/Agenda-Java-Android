@@ -2,13 +2,17 @@ package lfr.agenda.Model;
 
 import java.io.Serializable;
 
-public class Cliente implements Serializable {
+//recebe a interface Serializable para que o Adapter possa jogar esse
+// objeto para outra Activity.
 
+public class Cliente implements Serializable {
+    //Atributos
     private int id = 0;
     private String nome;
     private String telefone;
     private String email;
 
+    //Construtores
     public Cliente(String nome, String telefone, String email) {
         this.nome = nome;
         this.telefone = telefone;
@@ -18,10 +22,19 @@ public class Cliente implements Serializable {
     public Cliente() {
 
     }
+//metodos
 
     @Override
-    public String toString() {
+    public String toString() {//Sobrescreve o metodo padrão para aprimorar a referencia da classe
         return this.nome + "      Tel:  " + this.telefone;
+    }
+
+    public boolean temIdValido() {//verifica se a instancia Cliente acessada já está cadastrada
+        if (this.id == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     //GETTs E SETTs
@@ -57,11 +70,5 @@ public class Cliente implements Serializable {
         return this.id;
     }
 
-    public boolean temIdValido() {
-        if (this.id == 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+
 }
