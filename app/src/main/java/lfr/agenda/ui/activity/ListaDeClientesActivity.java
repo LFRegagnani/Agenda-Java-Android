@@ -18,10 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import lfr.agenda.DAO.ClienteDAO;
-import lfr.agenda.Model.Cliente;
+import lfr.agenda.dao.ClienteDAO;
+import lfr.agenda.model.Cliente;
 import lfr.agenda.R;
 
+@SuppressWarnings("Convert2Lambda")
 public class ListaDeClientesActivity extends AppCompatActivity implements ConstantesActivityes {
     //Atributos
     public static final String TITLE_APPBAR = "Agenda da Kátia";
@@ -61,7 +62,7 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int idDoMenu = item.getItemId();
         if (idDoMenu == R.id.menu_remover) {
-            confirmarRemoçãoOuNãoDoCliente(item);
+            confirmarRemocaoOuNaoDoCliente(item);
         }
         return super.onContextItemSelected(item);
     }
@@ -69,7 +70,7 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
     //Metodo de confirmação de exclusão do cliente após selecionar o menu "Remover".
     //Aqui um Dialog é criado e se for confirmada a exclusão com clique na opção "sim"
     //O cliente clicado é enviado ao adapter e ao DAO e ambos farão a exclusão do cliente.
-    private void confirmarRemoçãoOuNãoDoCliente(@NonNull MenuItem item) {
+    private void confirmarRemocaoOuNaoDoCliente(@NonNull MenuItem item) {
         new AlertDialog.Builder(this)
                 .setTitle("Remover cliente")
                 .setMessage("Tem CERTEZA que quer remover o cliente?")

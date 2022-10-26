@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,28 +12,34 @@
     android:orientation="vertical">
 
     <EditText
+        android:id="@+id/campoNome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="@string/nome"
         android:inputType="textCapWords"
-        android:layout_margin="8dp"
-        android:hint="Nome"
-        android:id="@+id/campoNome" />
+        tools:ignore="TouchTargetSizeCheck"
+        android:autofillHints="" />
 
     <EditText
+        android:id="@+id/campoTelefone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:autofillHints=""
+        android:hint="@string/telefone"
         android:inputType="phone"
-        android:layout_margin="8dp"
-        android:hint="Telefone"
-        android:id="@+id/campoTelefone" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
+        android:id="@+id/campoEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:hint="@string/e_mail"
         android:inputType="textEmailAddress"
-        android:hint="E-mail"
-        android:id="@+id/campoEmail" />
+        tools:ignore="TouchTargetSizeCheck"
+        android:autofillHints="" />
 
 
 

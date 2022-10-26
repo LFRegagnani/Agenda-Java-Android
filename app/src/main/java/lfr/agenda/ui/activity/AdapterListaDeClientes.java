@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import lfr.agenda.Model.Cliente;
+import lfr.agenda.model.Cliente;
 import lfr.agenda.R;
 
 //O adapter serve para conectar uma lista (Dao.clientes) ao elemento grafico que vai ultiliza-lo
@@ -20,7 +20,7 @@ import lfr.agenda.R;
 public class AdapterListaDeClientes extends BaseAdapter {
 
     //Atributos
-    private final List<Cliente> clientes = new ArrayList();
+    private final ArrayList<Cliente> clientes = new ArrayList<>();
     private final android.content.Context Context;
 
     //construtor

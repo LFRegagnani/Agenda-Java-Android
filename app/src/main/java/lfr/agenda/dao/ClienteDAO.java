@@ -1,9 +1,9 @@
-package lfr.agenda.DAO;
+package lfr.agenda.dao;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import lfr.agenda.Model.Cliente;
+import lfr.agenda.model.Cliente;
 
 public class ClienteDAO {
     //Atributos
@@ -33,8 +33,8 @@ public class ClienteDAO {
             }
         }
         if (clienteEncontrado != null) {
-            int posiçãoDoCliente = clientes.indexOf(clienteEncontrado);
-            clientes.set(posiçãoDoCliente, cliente);
+            int posicaoDoCliente = clientes.indexOf(clienteEncontrado);
+            clientes.set(posicaoDoCliente, cliente);
         }
     }
 

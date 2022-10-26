@@ -1,10 +1,13 @@
-package lfr.agenda.Model;
+package lfr.agenda.model;
+
+import androidx.annotation.NonNull;
 
 import java.io.Serializable;
 
 //recebe a interface Serializable para que o Adapter possa jogar esse
 // objeto para outra Activity.
 
+@SuppressWarnings("RedundantIfStatement")
 public class Cliente implements Serializable {
     //Atributos
     private int id = 0;
@@ -24,6 +27,7 @@ public class Cliente implements Serializable {
     }
 //metodos
 
+    @NonNull
     @Override
     public String toString() {//Sobrescreve o metodo padrão para aprimorar a referencia da classe
         return this.nome + "      Tel:  " + this.telefone;

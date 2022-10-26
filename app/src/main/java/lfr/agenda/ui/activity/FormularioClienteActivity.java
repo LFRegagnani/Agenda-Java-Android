@@ -10,8 +10,8 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import lfr.agenda.DAO.ClienteDAO;
-import lfr.agenda.Model.Cliente;
+import lfr.agenda.dao.ClienteDAO;
+import lfr.agenda.model.Cliente;
 import lfr.agenda.R;
 
 public class FormularioClienteActivity extends AppCompatActivity implements ConstantesActivityes {

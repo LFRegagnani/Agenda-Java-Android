@@ -2,8 +2,8 @@ package lfr.agenda;
 
 import android.app.Application;
 
-import lfr.agenda.DAO.ClienteDAO;
-import lfr.agenda.Model.Cliente;
+import lfr.agenda.dao.ClienteDAO;
+import lfr.agenda.model.Cliente;
 
 public class AgendaApplication extends Application {
 
