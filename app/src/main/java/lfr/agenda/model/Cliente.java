@@ -1,6 +1,9 @@
 package lfr.agenda.model;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
@@ -8,16 +11,21 @@ import java.io.Serializable;
 // objeto para outra Activity.
 
 @SuppressWarnings("RedundantIfStatement")
+@Entity
 public class Cliente implements Serializable {
     //Atributos
+    @PrimaryKey(autoGenerate = true)
     private int id = 0;
     private String nome;
+    private String sobrenome;
     private String telefone;
     private String email;
 
     //Construtores
+    @Ignore
     public Cliente(String nome, String telefone, String email) {
         this.nome = nome;
+        this.sobrenome = sobrenome;
         this.telefone = telefone;
         this.email = email;
     }
@@ -74,5 +82,11 @@ public class Cliente implements Serializable {
         return this.id;
     }
 
+    public String getSobrenome() {
+        return sobrenome;
+    }
 
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
 }

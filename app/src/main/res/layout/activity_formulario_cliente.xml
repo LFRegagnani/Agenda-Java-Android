@@ -22,6 +22,16 @@
         android:autofillHints="" />
 
     <EditText
+        android:id="@+id/campoSobrenome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="@string/sobrenome"
+        android:inputType="textCapWords"
+        tools:ignore="TouchTargetSizeCheck"
+        android:autofillHints="" />
+
+    <EditText
         android:id="@+id/campoTelefone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

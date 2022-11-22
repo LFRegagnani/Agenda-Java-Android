@@ -15,18 +15,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import lfr.agenda.dao.ClienteDAO;
-import lfr.agenda.model.Cliente;
 import lfr.agenda.R;
+import lfr.agenda.database.AgendaDatabase;
+import lfr.agenda.database.dao.RoomClienteDAO;
+import lfr.agenda.model.Cliente;
 
 @SuppressWarnings("Convert2Lambda")
 public class ListaDeClientesActivity extends AppCompatActivity implements ConstantesActivityes {
     //Atributos
     public static final String TITLE_APPBAR = "Agenda da Kátia";
-    private final ClienteDAO dao = new ClienteDAO();
+    public RoomClienteDAO dao;
     private AdapterListaDeClientes adapter;
 
     //Metodo de ciclo de vida:  metodo que inicializa a primeira tela do aplicativo
@@ -35,6 +37,8 @@ public class ListaDeClientesActivity extends AppCompatActivity implements Consta
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(TITLE_APPBAR);//Seta o titulo do app usando uma variavel que é um atributo.
+        this.dao = AgendaDatabase.getInstance(this).getRoomClienteDAO();
+
         setContentView(R.layout.activity_lista_de_clientes);//vincula esta activity ao XML dela
 
         inicializaFabNovoCliente();//Seta e configura o botão bolinha de adicionar Novo Cliente

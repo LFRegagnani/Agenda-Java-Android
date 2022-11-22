@@ -56,7 +56,7 @@ public class AdapterListaDeClientes extends BaseAdapter {
         TextView nomeDoCliente = viewCriada.findViewById(R.id.item_nome_do_cliente);
         TextView telefoneDoCliente = viewCriada.findViewById(R.id.item_telefone_do_cliente);
         Cliente clienteDevolvido = clientes.get(posicaoNaArray);
-        nomeDoCliente.setText(clienteDevolvido.getNome());
+        nomeDoCliente.setText(clienteDevolvido.getNome()+" "+clienteDevolvido.getSobrenome());
         telefoneDoCliente.setText(clienteDevolvido.getTelefone());
     }
 
